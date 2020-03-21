@@ -6,8 +6,8 @@ class DBConnection:
   
   @staticmethod
   def getConnection():
-    return pymongo.MongoClient("mongodb://" + USER_NAME + ":" + PASSWORD + "@bene.gridpiloten.de:27017/")
+    return pymongo.MongoClient("mongodb://" + DBConnection.USER_NAME + ":" + DBConnection.PASSWORD + "@bene.gridpiloten.de:27017/")
   
   @staticmethod  
   def getStatisticDB():
-    return getConnection()["Statistic"]
+    return DBConnection.getConnection()["Statistic"]

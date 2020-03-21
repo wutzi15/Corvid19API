@@ -58,7 +58,7 @@ paths:
       description: "Add a cases entry"
       parameters:
         - in: body
-          name: source
+          name: cases
           description: "cases to add"
           schema:
             $ref: '#/definitions/cases'

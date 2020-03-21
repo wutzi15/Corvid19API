@@ -1,4 +1,5 @@
 from DBConnection import DBConnection
+import source
 
 def read_all():
     return Cases().loadAll();
@@ -12,12 +13,12 @@ class Cases(object):
     
     def add(self, cases):
         statisticDB = DBConnection.getStatisticDB()
-        statisticDB["cases"].insert(apiToDB(cases));
+        statisticDB["cases"].insert(self.apiToDB(cases));
     
     def readCursor(self, cursor):
         casesList = list()
         for cases in cursor:
-            casesList.append(dBToApi(cases))
+            casesList.append(self.dBToApi(cases))
         return casesList
     
     

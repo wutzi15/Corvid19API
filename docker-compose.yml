@@ -6,7 +6,8 @@ services:
                 restart: always
                 ports:
                         - 4711:5000
-
+                volumes:
+                        - ./certs:/certs
         watchtower:
                 image: containrrr/watchtower
                 volumes:

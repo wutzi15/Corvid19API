@@ -15,7 +15,7 @@ paths:
     get:
       operationId: "area.read_all"
       tags:
-      	- Area
+        - Area
       description: "Read all geo areas"
       responses:
         200:
@@ -32,10 +32,10 @@ paths:
                   type: "array"
                   items:
                     properties:
-                  	  longitude:
-                  	    type: "number"
-                  	  latitude:
-                  	    type: "number"
+                      longitude:
+                        type: "number"
+                      latitude:
+                        type: "number"
                 country:
                   type: "string"
                 zip:
@@ -44,4 +44,4 @@ paths:
                   type: "string"
                 region:
                   type: "string"
-                  	  
+                

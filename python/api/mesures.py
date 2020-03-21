@@ -3,18 +3,24 @@ import action
 import source
 
 def read_all():
-    return Mesures().loadAll();
+    return Mesures().loadAll()
 def add(mesures):
-    return Mesures().add(mesures);
+    return Mesures().add(mesures)
+def delete_all():
+    return Mesures().deleteAll()
 
 class Mesures(object):
     def loadAll(self):
         statisticDB = DBConnection.getStatisticDB()
         return self.readCursor(statisticDB["Mesures"].find({}))
-    
+
+    def deleteAll(self):
+        statisticDB = DBConnection.getStatisticDB()
+        statisticDB["Mesures"].drop()
+
     def add(self, mesures):
         statisticDB = DBConnection.getStatisticDB()
-        statisticDB["Mesures"].insert(self.apiToDB(mesures));
+        statisticDB["Mesures"].insert(self.apiToDB(mesures))
     
     def readCursor(self, cursor):
         mesuresList = list()
@@ -25,28 +31,28 @@ class Mesures(object):
     
     def apiToDB(self, apiMesuer):
         mesureDB = dict()
-        dbId = apiMesuer.get("_id", None);
+        dbId = apiMesuer.get("_id", None)
         if (not (dbId is None )) :
             mesureDB["_id"] = dbId
         mesureDB["date"] = apiMesuer["date"]
         mesureDB["adm"] = apiMesuer["adm"]
         mesureDB["source"] = source.getSource({"url": apiMesuer["source"]})
         mesureDB["actions"] = list()
-        if (apiMesuer["border_control"]) :
+        if (apiMesuer["border_control"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "border_control"}))
-        if (apiMesuer["home_office"]) :
+        if (apiMesuer["home_office"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "home_office"}))
-        if (apiMesuer["closure_leisureandbars"]) :
+        if (apiMesuer["closure_leisureandbars"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "closure_leisureandbars"}))
-        if (apiMesuer["lockdown"]) :
+        if (apiMesuer["lockdown"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "lockdown"}))
-        if (apiMesuer["schools_closed"]) :
+        if (apiMesuer["schools_closed"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "schools_closed"}))
-        if (apiMesuer["traveller_quarantine"]) :
+        if (apiMesuer["traveller_quarantine"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "traveller_quarantine"}))
-        if (apiMesuer["primary_residence"]) :
+        if (apiMesuer["primary_residence"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "primary_residence"}))
-        if (apiMesuer["test_limitations"]) :
+        if (apiMesuer["test_limitations"] in ["TRUE", "true", "True", True]) :
             mesureDB["actions"].append(action.getAction({"name": "test_limitations"}))
         return mesureDB
      

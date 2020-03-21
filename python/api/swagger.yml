@@ -23,25 +23,44 @@ paths:
           schema:
             type: "array"
             items:
-              properties:
-                id:
-                  type: "integer"
-                name:
-                  type: "string"
-                area:
-                  type: "array"
-                  items:
-                    properties:
-                      longitude:
-                        type: "number"
-                      latitude:
-                        type: "number"
-                country:
-                  type: "string"
-                zip:
-                  type: "string"
-                city:
-                  type: "string"
-                region:
-                  type: "string"
+              $ref: '#/definitions/area'
+    put:
+      operationId: "area.add"
+      tags:
+        - Area
+      description: "Add a geo area"
+      parameters:
+        - in: body
+          name: area
+          description: "geo area to add"
+          schema:
+            $ref: '#/definitions/area'
+      responses:
+        200:
+          description: "Successful add geo entry operation"
+      
+definitions:
+    area:
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+        area:
+          type: "array"
+          items:
+            properties:
+              longitude:
+                type: "number"
+              latitude:
+                type: "number"
+        country:
+          type: "string"
+        zip:
+          type: "string"
+        city:
+          type: "string"
+        region:
+          type: "string"
+
 

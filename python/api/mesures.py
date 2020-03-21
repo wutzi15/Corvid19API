@@ -1,5 +1,6 @@
 from DBConnection import DBConnection
-from _ast import If
+import action
+import source
 
 def read_all():
     return Mesures().loadAll();
@@ -29,29 +30,30 @@ class Mesures(object):
             mesureDB["_id"] = dbId
         mesureDB["date"] = apiMesuer["date"]
         mesureDB["adm"] = apiMesuer["adm"]
-        mesureDB["source"] = {"url": apiMesuer["source"]}
+        mesureDB["source"] = source.getSource({"url": apiMesuer["source"]})
         mesureDB["actions"] = list()
         if (apiMesuer["border_control"]) :
-            mesureDB["actions"].append({"name": "border_control"})
+            mesureDB["actions"].append(action.getAction({"name": "border_control"}))
         if (apiMesuer["home_office"]) :
-            mesureDB["actions"].append({"name": "home_office"})
+            mesureDB["actions"].append(action.getAction({"name": "home_office"}))
         if (apiMesuer["closure_leisureandbars"]) :
-            mesureDB["actions"].append({"name": "closure_leisureandbars"})
+            mesureDB["actions"].append(action.getAction({"name": "closure_leisureandbars"}))
         if (apiMesuer["lockdown"]) :
-            mesureDB["actions"].append({"name": "lockdown"})
+            mesureDB["actions"].append(action.getAction({"name": "lockdown"}))
         if (apiMesuer["schools_closed"]) :
-            mesureDB["actions"].append({"name": "schools_closed"})
+            mesureDB["actions"].append(action.getAction({"name": "schools_closed"}))
         if (apiMesuer["traveller_quarantine"]) :
-            mesureDB["actions"].append({"name": "traveller_quarantine"})
+            mesureDB["actions"].append(action.getAction({"name": "traveller_quarantine"}))
         if (apiMesuer["primary_residence"]) :
-            mesureDB["actions"].append({"name": "primary_residence"})
+            mesureDB["actions"].append(action.getAction({"name": "primary_residence"}))
         if (apiMesuer["test_limitations"]) :
-            mesureDB["actions"].append({"name": "test_limitations"})
+            mesureDB["actions"].append(action.getAction({"name": "test_limitations"}))
         return mesureDB
      
     def dBToApi(self, dbMesures):
         if (dbMesures is None) :
             return None
+        print(dbMesures)
         apiMesuer = dict()
         apiMesuer["_id"] = str(dbMesures["_id"])
         apiMesuer["date"] = dbMesures["date"]

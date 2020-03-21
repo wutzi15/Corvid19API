@@ -65,6 +65,33 @@ paths:
       responses:
         200:
           description: "Successful add source operation"
+  /cases:
+    get:
+      operationId: "cases.read_all"
+      tags:
+        - Cases
+      description: "Read all cases"
+      responses:
+        200:
+          description: "Successful read cases list operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/cases'
+    put:
+      operationId: "cases.add"
+      tags:
+        - Cases
+      description: "Add a cases entry"
+      parameters:
+        - in: body
+          name: source
+          description: "cases to add"
+          schema:
+            $ref: '#/definitions/cases'
+      responses:
+        200:
+          description: "Successful add cases operation"
   
 definitions:
     area:
@@ -97,4 +124,20 @@ definitions:
           type: "string"
         url:
           type: "string"
+    cases:
+      properties:
+        id:
+          type: "string"
+        date:
+          type: "string"
+        area:
+          $ref: '#/definitions/area'
+        infected:
+          type: "integer"
+        dead:
+          type: "integer"
+        recovered:
+          type: "integer"
+        source:
+          $ref: '#/definitions/source'
 

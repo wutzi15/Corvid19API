@@ -10,6 +10,7 @@
 | infected | long | - |
 | dead | long | - |
 | recovered | long | - |
+| source | Source | - |
 
 ### Events
 | rows | datatype | comment |
@@ -20,3 +21,9 @@
 | category | string | Ausgangssperre, Flug Verbot etc. |
 | effect | ? | Auswirkungen auf Wachstumszahlen |
 | type | string | Natürlich / Regierung / Gesellschaft |
+
+### Sources
+| rows | datatype | comment |
+| ------------ | ------------ | ------------ |
+| name | String | - |
+| url | String | - |

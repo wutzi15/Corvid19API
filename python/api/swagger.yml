@@ -69,7 +69,7 @@ paths:
       operationId: "cases.search"
       tags:
         - Cases
-      description: "search a cases entries"
+      description: "search a cases entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
       parameters:
         - in: body
           name: cases
@@ -114,7 +114,7 @@ paths:
       operationId: "mesures.search"
       tags:
         - Mesures
-      description: "search mesures entries"
+      description: "search mesures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
       parameters:
         - in: body
           name: mesures

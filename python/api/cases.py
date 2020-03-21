@@ -29,7 +29,8 @@ class Cases(object):
     
     
     def apiToDB(self, cases):
-        cases["source"] = source.getSource({"name": cases["source"]})
+        if ("source" in cases) :
+            cases["source"] = source.getSource({"name": cases["source"]})
         return cases
      
     def dBToApi(self, cases):

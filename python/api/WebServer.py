@@ -4,6 +4,7 @@ Created on 21.03.2020
 @author: Jan-Erik Matthies
 '''
 from flask import render_template
+from flask_cors import CORS
 import connexion
 
 HOST_ADDRESS =  "bene.gridpiloten.de"
@@ -14,6 +15,9 @@ app = connexion.App(__name__, specification_dir='./')
 
 # Read the swagger.yml file to configure the endpoints
 app.add_api('swagger.yml')
+
+# add CORS support
+CORS(app.app)
 
 # Create a URL route in our application for "/"
 @app.route('/')

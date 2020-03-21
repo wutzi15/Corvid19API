@@ -71,6 +71,7 @@ class Mesures(object):
         apiMesuer["date"] = dbMesures["date"]
         apiMesuer["adm"] = dbMesures["adm"]
         apiMesuer["source"] = dbMesures["source"]["url"]
+        apiMesuer["actions"] = dbMesures["actions"]
         for action in dbMesures["actions"]:
             if (action["name"] == "border_control") :
                 apiMesuer["border_control"] = True

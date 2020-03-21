@@ -128,7 +128,33 @@ paths:
             type: "array"
             items:
               $ref: '#/definitions/mesures'
-  
+  /action:
+    get:
+      operationId: "action.read_all"
+      tags:
+        - Action
+      description: "Read all actions"
+      responses:
+        200:
+          description: "Successful read action list operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/action'
+    put:
+      operationId: "action.add"
+      tags:
+        - Action
+      description: "Add a action"
+      parameters:
+        - in: body
+          name: action
+          description: "action to add"
+          schema:
+            $ref: '#/definitions/action'
+      responses:
+        200:
+          description: "Successful add action operation"
 definitions:
     source:
       properties:
@@ -197,5 +223,15 @@ definitions:
         misc:
           type: "string"
         source:
+          type: "string"
+        actions:
+          type: "array"
+          items:
+            $ref: '#/definitions/action'
+    action:
+      properties:
+        _id:
+          type: "string"
+        name:
           type: "string"
 

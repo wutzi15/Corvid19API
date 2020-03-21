@@ -53,7 +53,6 @@ class Mesures(object):
     def dBToApi(self, dbMesures):
         if (dbMesures is None) :
             return None
-        print(dbMesures)
         apiMesuer = dict()
         apiMesuer["_id"] = str(dbMesures["_id"])
         apiMesuer["date"] = dbMesures["date"]

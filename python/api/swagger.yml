@@ -11,4 +11,30 @@ produces:
 basePath: "/api"
 
 paths:
-  /
+  /area:
+    get:
+      operationId: "area.read_all"
+      tags:
+      	- Area
+      description: "Read all geo areas"
+      responses:
+        200:
+          description: "Successful read geo list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                id:
+                  type: "integer"
+                name:
+                  type: "string"
+                area:
+                  type: "array"
+                  items:
+                    properties:
+                  	  longitude:
+                  	    type: "number"
+                  	  latitude:
+                  	    type: "number"
+                  	    
+                  	  

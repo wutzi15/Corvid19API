@@ -75,7 +75,7 @@ paths:
           name: cases
           description: "cases to search"
           schema:
-            $ref: '#/definitions/cases'
+            type: object
       responses:
         200:
           description: "Successful found cases operation"

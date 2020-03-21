@@ -69,13 +69,13 @@ paths:
       operationId: "cases.search"
       tags:
         - Cases
-      description: "search a cases entries"
+      description: "search a cases entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
       parameters:
         - in: body
           name: cases
           description: "cases to search"
           schema:
-            $ref: '#/definitions/cases'
+            type: object
       responses:
         200:
           description: "Successful found cases operation"
@@ -110,6 +110,24 @@ paths:
       responses:
         200:
           description: "Successful add mesures operation"
+    post:
+      operationId: "mesures.search"
+      tags:
+        - Mesures
+      description: "search mesures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
+      parameters:
+        - in: body
+          name: mesures
+          description: "mesures to search"
+          schema:
+            type: object
+      responses:
+        200:
+          description: "Successful found mesures operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/mesures'
   
 definitions:
     source:

@@ -8,6 +8,8 @@ def add(mesures):
     return Mesures().add(mesures)
 def delete_all():
     return Mesures().deleteAll()
+def search(mesures):
+    return Mesures().search(mesures)
 
 class Mesures(object):
     def loadAll(self):
@@ -18,6 +20,11 @@ class Mesures(object):
         statisticDB = DBConnection.getStatisticDB()
         statisticDB["Mesures"].drop()
 
+    
+    def search(self, mesures):
+        statisticDB = DBConnection.getStatisticDB()
+        return self.readCursor(statisticDB["Mesures"].find(mesures))
+    
     def add(self, mesures):
         statisticDB = DBConnection.getStatisticDB()
         statisticDB["Mesures"].insert(self.apiToDB(mesures))

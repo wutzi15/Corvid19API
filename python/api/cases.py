@@ -8,15 +8,26 @@ def add(cases):
 class Cases(object):
     def loadAll(self):
         statisticDB = DBConnection.getStatisticDB()
-        return self.readCursor(statisticDB["Cases"].find({}))
+        return self.readCursor(statisticDB["cases"].find({}))
     
-    def add(self, source):
+    def add(self, cases):
         statisticDB = DBConnection.getStatisticDB()
-        statisticDB["Cases"].insert(cases);
+        statisticDB["cases"].insert(apiToDB(cases));
     
     def readCursor(self, cursor):
         casesList = list()
         for cases in cursor:
-            cases["_id"] = str(cases["_id"])
-            casesList.append(cases)
+            casesList.append(dBToApi(cases))
         return casesList
+    
+    
+    def apiToDB(self, cases):
+        cases["source"] = source.getSource({"name": cases["source"]})
+        return cases
+     
+    def dBToApi(self, cases):
+        if (cases is None) :
+            return None
+        cases["_id"] = str(cases["_id"])
+        cases["source"] = cases["source"]["name"]
+        return cases

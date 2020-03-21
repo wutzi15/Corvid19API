@@ -1,13 +1,33 @@
 version: '3.1'
 
+networks:
+        proxy:
+        app-net:
+
 services:
+        nginx:
+                image: nginx:latest
+                ports:
+                    - 4712:4712
+                    - 4711:4711
+                volumes:
+                    - ./config/nginx:/etc/nginx/conf.d
+                    - ./static:/static
+                    - ./certs:/certs
+                depends_on:
+                    - corvid19api
+                restart: always
+                networks:
+                        - app-net
         corvid19api:
                 image: wutzi/corvid19api
                 restart: always
                 ports:
-                        - 4711:5000
+                        - 8000:8000
                 volumes:
                         - ./certs:/certs
+                networks:
+                        - app-net
         watchtower:
                 image: containrrr/watchtower
                 volumes:

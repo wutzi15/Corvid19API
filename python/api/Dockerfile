@@ -10,10 +10,10 @@ COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
 COPY . /app
-COPY gunicorn.conf.py /etc/
+
 
 
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 8000
 
 CMD ["/app/start.sh"]

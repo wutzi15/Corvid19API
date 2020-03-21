@@ -6,8 +6,8 @@ Created on 21.03.2020
 from flask import render_template
 import connexion
 
-# "bene.gridpiloten.de"
-HOST_ADDRESS = "localhost"
+HOST_ADDRESS =  "bene.gridpiloten.de"
+#HOST_ADDRESS = "localhost"
 
 # Create the application instance
 app = connexion.App(__name__, specification_dir='./')
@@ -27,4 +27,4 @@ def home():
 
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
-    app.run(host= HOST_ADDRESS, port=5000, debug=True)
+    app.run(port=5000, debug=True)

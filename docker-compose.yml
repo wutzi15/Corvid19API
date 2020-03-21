@@ -1,0 +1,8 @@
+version: '3.1'
+
+services: 
+        corvid19api:
+                image: wutzi/corvid19api
+                restart: always
+                ports:
+                        - 4711:5000

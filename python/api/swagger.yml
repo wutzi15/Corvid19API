@@ -36,4 +36,12 @@ paths:
                   	    type: "number"
                   	  latitude:
                   	    type: "number"
+                country:
+                  type: "string"
+                zip:
+                  type: "string"
+                city:
+                  type: "string"
+                region:
+                  type: "string"
                   	  

@@ -4,8 +4,8 @@ from flask import Flask, escape, request
 import os
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
+from flask import *
 from handleUpload import handle_file
-
 app = Flask(__name__)
 
 UPLOAD_FOLDER = ''
@@ -32,14 +32,21 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             handle_file(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('upload_file', filename=filename))
+            return redirect('/success')
+
     return '''
     <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
+    <title>New Data</title>
+    <h1>Upload new data</h1>
+        Use csv format.
+     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
     </form>
     '''
 
+@app.route('/success')
+def upload_success():
+     return render_template("success.html")
+
+#url_for('upload_file', filename=filename)

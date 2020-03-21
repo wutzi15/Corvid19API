@@ -1,4 +1,4 @@
 connexion
 pymongo
 connexion[swagger-ui]
-
+swagger-ui-bundle

@@ -1,19 +1,17 @@
-FROM ubuntu:16.04
+FROM python:latest
 
-MAINTANER Jan-Erik Mathies "jem@jemtech.de"
 
-RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+RUN apt update -y && apt install -y python-pip python-dev
 
-# We copy just the requirements.txt first to leverage Docker cache
-COPY ./requirements.txt /app/requirements.txt
-
-WORKDIR /app
-
-RUN pip install -r requirements.txt
+#RUN apt install -y --no-install-recommends gunicorn xvfb wget libnss3 libxss1 libappindicator1 libindicator7 libsdl1.2-dev fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libgtk-3-0 libnspr4 libnss3 libxtst6 lsb-release xdg-utils
+WORKDIR /usr/bin
 
 COPY . /app
+COPY ./requirements.txt /app/requirements.txt
 
-ENTRYPOINT [ "python" ]
+RUN pip install -r /app/requirements.txt
 
-CMD [ "WebServer.py" ]
+WORKDIR /app
+EXPOSE 5000
+
+CMD ["/app/start.sh"]

@@ -10,4 +10,4 @@ class DBConnection:
   
   @staticmethod  
   def getStatisticDB():
-    return DBConnection.getConnection()["Statistic"]
+    return DBConnection.getConnection()["jhu"]

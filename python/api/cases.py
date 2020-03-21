@@ -8,11 +8,11 @@ def add(cases):
 class Cases(object):
     def loadAll(self):
         statisticDB = DBConnection.getStatisticDB()
-        return self.readCursor(statisticDB["Cases"].find({}))
+        return self.readCursor(statisticDB["cases"].find({}))
     
-    def add(self, source):
+    def add(self, cases):
         statisticDB = DBConnection.getStatisticDB()
-        statisticDB["Cases"].insert(cases);
+        statisticDB["cases"].insert(cases);
     
     def readCursor(self, cursor):
         casesList = list()

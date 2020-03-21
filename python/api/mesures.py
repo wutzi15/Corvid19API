@@ -6,11 +6,17 @@ def read_all():
     return Mesures().loadAll();
 def add(mesures):
     return Mesures().add(mesures);
+def search(mesures):
+    return Mesures().search(mesures);
 
 class Mesures(object):
     def loadAll(self):
         statisticDB = DBConnection.getStatisticDB()
         return self.readCursor(statisticDB["Mesures"].find({}))
+    
+    def search(self, mesures):
+        statisticDB = DBConnection.getStatisticDB()
+        return self.readCursor(statisticDB["Mesures"].find(mesures))
     
     def add(self, mesures):
         statisticDB = DBConnection.getStatisticDB()

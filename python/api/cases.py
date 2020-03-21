@@ -17,7 +17,6 @@ class Cases(object):
     def readCursor(self, cursor):
         casesList = list()
         for cases in cursor:
-            cases["id"] = str(cases["_id"])
-            del cases['_id']
+            cases["_id"] = str(cases["_id"])
             casesList.append(cases)
         return casesList

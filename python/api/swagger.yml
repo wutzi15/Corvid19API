@@ -11,33 +11,6 @@ produces:
 basePath: "/api"
 
 paths:
-  /area:
-    get:
-      operationId: "area.read_all"
-      tags:
-        - Area
-      description: "Read all geo areas"
-      responses:
-        200:
-          description: "Successful read geo list operation"
-          schema:
-            type: "array"
-            items:
-              $ref: '#/definitions/area'
-    put:
-      operationId: "area.add"
-      tags:
-        - Area
-      description: "Add a geo area"
-      parameters:
-        - in: body
-          name: area
-          description: "geo area to add"
-          schema:
-            $ref: '#/definitions/area'
-      responses:
-        200:
-          description: "Successful add geo entry operation"
   /source:
     get:
       operationId: "source.read_all"
@@ -94,31 +67,9 @@ paths:
           description: "Successful add cases operation"
   
 definitions:
-    area:
-      properties:
-        id:
-          type: "string"
-        name:
-          type: "string"
-        area:
-          type: "array"
-          items:
-            properties:
-              longitude:
-                type: "number"
-              latitude:
-                type: "number"
-        country:
-          type: "string"
-        zip:
-          type: "string"
-        city:
-          type: "string"
-        region:
-          type: "string"
     source:
       properties:
-        id:
+        _id:
           type: "string"
         name:
           type: "string"
@@ -126,18 +77,32 @@ definitions:
           type: "string"
     cases:
       properties:
-        id:
+        _id:
           type: "string"
         date:
           type: "string"
-        area:
-          $ref: '#/definitions/area'
+        adm:
+          type: "array"
+          items:
+            type: "string"
+        ageRange:
+          $ref: '#/definitions/ageRange'
+        sex:
+          type: "string"
         infected:
           type: "integer"
         dead:
           type: "integer"
         recovered:
           type: "integer"
+        tested:
+          type: "integer"
         source:
-          $ref: '#/definitions/source'
+          type: "string"
+    ageRange:
+      properties:
+        lower:
+          type: "integer"
+        upper:
+          type: "integer"
 

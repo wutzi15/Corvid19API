@@ -17,7 +17,6 @@ class Source(object):
     def readCursor(self, cursor):
         sources = list()
         for source in cursor:
-            source["id"] = str(source["_id"])
-            del source['_id']
+            source["_id"] = str(source["_id"])
             sources.append(source)
         return sources

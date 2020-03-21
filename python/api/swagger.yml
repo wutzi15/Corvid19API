@@ -36,5 +36,4 @@ paths:
                   	    type: "number"
                   	  latitude:
                   	    type: "number"
-                  	    
                   	  

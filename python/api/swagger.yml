@@ -38,12 +38,39 @@ paths:
       responses:
         200:
           description: "Successful add geo entry operation"
-      
+  /source:
+    get:
+      operationId: "source.read_all"
+      tags:
+        - Source
+      description: "Read all sources"
+      responses:
+        200:
+          description: "Successful read source list operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/source'
+    put:
+      operationId: "source.add"
+      tags:
+        - Source
+      description: "Add a source"
+      parameters:
+        - in: body
+          name: source
+          description: "source to add"
+          schema:
+            $ref: '#/definitions/source'
+      responses:
+        200:
+          description: "Successful add source operation"
+  
 definitions:
     area:
       properties:
         id:
-          type: "integer"
+          type: "string"
         name:
           type: "string"
         area:
@@ -62,5 +89,12 @@ definitions:
           type: "string"
         region:
           type: "string"
-
+    source:
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+        url:
+          type: "string"
 

@@ -17,5 +17,7 @@ class Area(object):
     def readCursor(self, cursor):
         areas = list()
         for area in cursor:
+            area["id"] = str(area["_id"])
+            del area['_id']
             areas.append(area)
         return areas

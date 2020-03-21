@@ -65,6 +65,24 @@ paths:
       responses:
         200:
           description: "Successful add cases operation"
+    post:
+      operationId: "cases.search"
+      tags:
+        - Cases
+      description: "search a cases entries"
+      parameters:
+        - in: body
+          name: cases
+          description: "cases to search"
+          schema:
+            $ref: '#/definitions/cases'
+      responses:
+        200:
+          description: "Successful found cases operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/cases'
   /mesures:
     get:
       operationId: "mesures.read_all"

@@ -5,11 +5,17 @@ def read_all():
     return Cases().loadAll();
 def add(cases):
     return Cases().add(cases);
+def search(cases):
+    return Cases().search(cases);
 
 class Cases(object):
     def loadAll(self):
         statisticDB = DBConnection.getStatisticDB()
         return self.readCursor(statisticDB["cases"].find({}))
+    
+    def search(self, cases):
+        statisticDB = DBConnection.getStatisticDB()
+        return self.readCursor(statisticDB["cases"].find(cases))
     
     def add(self, cases):
         statisticDB = DBConnection.getStatisticDB()

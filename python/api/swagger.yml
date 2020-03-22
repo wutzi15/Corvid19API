@@ -130,9 +130,9 @@ paths:
               $ref: '#/definitions/mesures'
   /measures:
     get:
-      operationId: "mesures.read_all"
+      operationId: "measures.read_all"
       tags:
-        - Mesures
+        - Measures
       description: "Read all measures"
       responses:
         200:
@@ -142,13 +142,13 @@ paths:
             items:
               $ref: '#/definitions/measures'
     put:
-      operationId: "mesures.add"
+      operationId: "measures.add"
       tags:
-        - Mesures
+        - Measures
       description: "DEPRICATED Add a measures entry"
       parameters:
         - in: body
-          name: mesures
+          name: measures
           description: "measures to add"
           schema:
             $ref: '#/definitions/measures'
@@ -156,13 +156,13 @@ paths:
         200:
           description: "Successful add measures operation"
     post:
-      operationId: "mesures.search"
+      operationId: "measures.search"
       tags:
-        - Mesures
+        - Measures
       description: "Search measures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
       parameters:
         - in: body
-          name: mesures
+          name: measures
           description: "measures to search"
           schema:
             type: object

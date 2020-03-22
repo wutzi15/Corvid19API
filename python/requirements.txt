@@ -1,3 +1,4 @@
 # 2020-03-22
 #https://qwikidata.readthedocs.io/en/stable/readme.html
 qwikidata
+pyproj

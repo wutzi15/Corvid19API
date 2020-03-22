@@ -4,12 +4,19 @@ Created on 22.03.2020
 @author: wf
 '''
 from qwikidata.sparql import return_sparql_query_results
-from google.protobuf.internal.python_message import _AddStaticMethods
+from loc import Projection
 
 class WikiData:
     @staticmethod
     def stripId(url):
         return url.replace('http://www.wikidata.org/entity/','')
+    
+    @staticmethod
+    def stripLocation(location):
+        location=location.replace('Point(','')
+        location=location.replace(')','')
+        location=location.replace(' ',',')
+        return location    
 
 class Population:
     '''
@@ -31,7 +38,7 @@ class Population:
     
     @staticmethod    
     def oneQFromWikiData(q):    
-        sparql='''SELECT ?province ?provinceLabel ?pop 
+        sparql='''SELECT ?province ?provinceLabel ?location ?isocode ?pop 
 WHERE 
 {
   # any subject
@@ -40,6 +47,10 @@ WHERE
   # German Bundesland
   # https://www.wikidata.org/wiki/Q1221156
   ?province wdt:P31 wd:'''+q+'''.
+  # https://www.wikidata.org/wiki/Property:P300
+  ?province wdt:P300 ?isocode.
+  # https://www.wikidata.org/wiki/Property:P625
+  ?province wdt:P625 ?location.
   # get the population
   # https://www.wikidata.org/wiki/Property:P1082
   ?province wdt:P1082 ?pop.
@@ -59,8 +70,14 @@ WHERE
         '''
         if Population.debug:
             print (record)
+        self.wikiDataId=record['province']['value']
+        self.wikiDataId=WikiData.stripId(self.wikiDataId)
         self.name=record['provinceLabel']['value']
         self.size=record['pop']['value']
+        self.isocode=record['isocode']['value']
+        self.location=record['location']['value']
+        self.location=WikiData.stripLocation(self.location)
+        self.coords=Projection.pointToXy(self.location)
         
 class Country:
     countries=[]
@@ -68,7 +85,7 @@ class Country:
     @staticmethod
     def fromWikiData():
         sparql='''
-    SELECT ?country ?countryLabel ?isocc ?pop   WHERE {
+    SELECT ?country ?countryLabel ?isocc ?location ?pop   WHERE {
     ?country wdt:P31 wd:Q3624078 . # sovereign state
     # get the iso country code
     # https://www.wikidata.org/wiki/Property:P297
@@ -76,6 +93,8 @@ class Country:
     # get the population
     # https://www.wikidata.org/wiki/Property:P1082
     ?country wdt:P1082 ?pop.
+    # https://www.wikidata.org/wiki/Property:P625
+    ?country wdt:P625 ?location.
     SERVICE wikibase:label {
        bd:serviceParam wikibase:language "en"
     }
@@ -93,6 +112,9 @@ class Country:
         self.wikiDataId=WikiData.stripId(self.wikiDataId)
         self.isocc=record['isocc']['value']
         self.pop=record['pop']['value']
+        self.location=record['location']['value']
+        self.location=WikiData.stripLocation(self.location)
+        self.coords=Projection.pointToXy(self.location)
         pass
         
             

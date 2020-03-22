@@ -145,7 +145,7 @@ paths:
       operationId: "measures.add"
       tags:
         - Measures
-      description: "DEPRECATED Add a measures entry"
+      description: "Add a measures entry"
       parameters:
         - in: body
           name: measures

@@ -31,3 +31,9 @@ class Source(object):
         self.add(search)
         sources = self.readCursor(statisticDB["Source"].find(search))
         return sources[0]
+    
+    def readCursorKeepId(self, cursor):
+        sources = list()
+        for source in cursor:
+            sources.append(source)
+        return sources

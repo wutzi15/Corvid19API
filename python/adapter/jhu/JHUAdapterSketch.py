@@ -12,6 +12,8 @@ from cases import Cases
 import datetime
 import requests
 import json
+from tqdm import tqdm
+import math
 
 
 map_country = pd.read_csv("country_mapping.csv", sep=";")
@@ -37,6 +39,8 @@ def doFile(file):
 
   for index, row in map_jhu.iterrows():
     df.loc[df['Country/Region'] == row['country'], "Country/Region"] = row['country_iso']
+  i = 0
+  df.fillna(0)
 
   for index, row in df.iterrows():
     data = {}
@@ -56,13 +60,25 @@ def doFile(file):
 
 
     data['date'] = str(int(date.timestamp()))
-    data['dead'] = row['Deaths']
-    data['infected'] = row['Confirmed']
-    data['recovered'] = row['Recovered']
+    if math.isnan(row['Deaths']):
+      data['dead'] = 0
+    else:
+      data['dead'] = int(row['Deaths'])
+
+    if math.isnan(row['Confirmed']):
+      data['infected'] = 0
+    else:
+      data['infected'] = int(row['Confirmed'])
+    #data['infected'] = int(row['Confirmed'])
+    if math.isnan(row['Recovered']):
+      data['recovered'] = 0
+    else:
+      data['recovered'] = int(row['Recovered'])
+    #data['recovered'] = int(row['Recovered'])
     data['source'] = 'JHU'
     adm = []
-    adm.append(row['Country/Region'])
-    adm.append(row['Province/State'])
+    adm.append(str(row['Country/Region']))
+    adm.append(str(row['Province/State']))
     data['adm'] = adm
     agerange = {}
     agerange['lower'] = 0
@@ -71,8 +87,16 @@ def doFile(file):
 
     data['sex'] = 'NaN'
     data['tested'] = 0
-    print(json.dumps(data))
-    r = requests.put('http://bene.gridpiloten.de:4711/api/cases', json = data)
+    #print(json.dumps(data))
+    i += 1
+    r = requests.put('http://bene.gridpiloten.de:4711/api/cases', json=data)
+    if r.status_code != 204:
+      print(file)
+      print(json.dumps(data))
+      print(r.content)
+
+  #print(f"Uploaded: {i}")
+  return i
 
 conn = DBConnection()
 statsdb = conn.getStatisticDB()
@@ -81,15 +105,26 @@ CSVPATH= "COVID-19/csse_covid_19_data/csse_covid_19_daily_reports"
 
 statsdb['cases'].delete_many({'source.name': 'JHU'})
 
-for root, dirs, files in os.walk(CSVPATH):
+globalI = 0
+
+def walkdir():
+  for root, dirs, files in os.walk(CSVPATH):
     for file in files:
-        if os.path.splitext(file)[1] == ".csv":
-            print(file)
-            doFile(CSVPATH +  '/' + file)
+      if os.path.splitext(file)[1] == ".csv":
+        yield CSVPATH +  '/' + file
 
-#doFile(CSVPATH +  '/' + '01-30-2020.csv')
+# Precomputing files count
+filescount = 0
+for _ in tqdm(walkdir()):
+    filescount += 1
 
 
+# Computing for real
+for filepath in tqdm(walkdir(), total=filescount):
+  globalI += doFile(filepath)
+
+print(f"global upload: {globalI}")
+#doFile(CSVPATH +  '/' + '03-17-2020.csv')
 
 
 

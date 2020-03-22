@@ -23,6 +23,13 @@ class Action(object):
             actions.append(action)
         return actions
     
+    def readCursorKeepId(self, cursor):
+        actions = list()
+        for action in cursor:
+            action["_id"] = str(action["_id"])
+            actions.append(action)
+        return actions
+    
     def getAction(self, search):
         statisticDB = DBConnection.getStatisticDB()
         actions = self.readCursor(statisticDB["Action"].find(search))

@@ -5,7 +5,9 @@ import json
 import re
 from datetime import datetime
 import pymongo
-
+import csv
+from dateutil.parser import parse
+from tqdm import tqdm
 
 class DBConnection:
   USER_NAME = "root"
@@ -24,21 +26,28 @@ statsdb = conn.getStatisticDB()
 
 statsdb['cases'].delete_many({'source.name': 'JHU'})
 
-
+i = 0
 r = requests.get("https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_COVID19/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json")
 j = r.json()["features"]
 df = pd.DataFrame()
 ages_re = re.compile('\d+')
-for d in j:
+#with open("RKI_COVID19.csv", "r") as file:
+reader = csv.DictReader(open("RKI_COVID19.csv", "r"))
+total = 0
+for _ in reader:
+    total += 1
+reader2 = csv.DictReader(open("RKI_COVID19.csv", "r"))
+for data in tqdm(reader2, total=total):
+    #pprint(data)
     outData = {}
-    data = d['attributes']
+    #data = d['attributes']
     adm = []
     adm.append("DE")
-    if data['IdBundesland'] < 10:
-        adm.append('0'  + str(data['IdBundesland']))
+    if int(data['\ufeffIdBundesland']) < 10:
+        adm.append('0'  + str(data['\ufeffIdBundesland']))
     else:
-        adm.append(str(data['IdBundesland']))
-    lk = int(data['IdBundesland']) % 100
+        adm.append(str(data['\ufeffIdBundesland']))
+    lk = int(data['\ufeffIdBundesland']) % 100
     if lk < 10:
         lk = '00' + str(lk)
     elif lk < 100:
@@ -57,17 +66,25 @@ for d in j:
         agerange['upper'] = 0
 
     outData['ageRange'] = agerange
-    outData['infected'] = data['AnzahlFall']
-    outData['dead'] = data['AnzahlTodesfall']
-    dt = datetime.fromtimestamp(data['Meldedatum'] / 1000)
-    outData['date'] = f"{dt:%Y-%m-%d}"
+    outData['infected'] = int(data['AnzahlFall'])
+    outData['dead'] = int(data['AnzahlTodesfall'])
+    #2020-03-14T00:00:00.000Z
+    FMT = '%Y-%m-%dT%H:%M%S.%fZ'
+    dt = parse(data['Meldedatum'])
+    outData['date'] = str(int(dt.timestamp()))
     outData['source'] = "RKI"
     outData['tested'] = 0
     outData['recovered'] = 0
-    #json.dumps(outData)
-    r = requests.put('http://bene.gridpiloten.de:4711/api/cases', json = outData)
-    print(outData)
 
+    #if data['IdLandkreis'] == "08325":
+
+    r = requests.put('http://bene.gridpiloten.de:4711/api/cases', json=outData)
+    if r.status_code != 204:
+      print(json.dumps(outData))
+      print(r.content)
+    i += 1
+    #print(outData)
+print(f"Uploaded: {i}")
 
 
 

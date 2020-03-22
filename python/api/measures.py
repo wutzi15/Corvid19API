@@ -2,22 +2,16 @@ from DBConnection import DBConnection
 import action
 import source
 
-###########
-
-## DEPRECATED
-
-##########
-
 def read_all():
-    return Mesures().loadAll()
-def add(mesures):
-    return Mesures().add(mesures)
+    return Measures().loadAll()
+def add(measures):
+    return Measures().add(measures)
 def delete_all():
-    return Mesures().deleteAll()
-def search(mesures):
-    return Mesures().search(mesures)
+    return Measures().deleteAll()
+def search(measures):
+    return Measures().search(measures)
 
-class Mesures(object):
+class Measures(object):
     def loadAll(self):
         statisticDB = DBConnection.getStatisticDB()
         return self.readCursor(statisticDB["Mesures"].find({}))
@@ -27,19 +21,19 @@ class Mesures(object):
         statisticDB["Mesures"].drop()
 
     
-    def search(self, mesures):
+    def search(self, measures):
         statisticDB = DBConnection.getStatisticDB()
-        return self.readCursor(statisticDB["Mesures"].find(mesures))
+        return self.readCursor(statisticDB["Mesures"].find(measures))
     
-    def add(self, mesures):
+    def add(self, measures):
         statisticDB = DBConnection.getStatisticDB()
-        statisticDB["Mesures"].insert(self.apiToDB(mesures))
+        statisticDB["Mesures"].insert(self.apiToDB(measures))
     
     def readCursor(self, cursor):
         mesuresList = list()
-        for mesures in cursor:
-            mesures = self.dBToApi(mesures)
-            mesuresList.append(mesures)
+        for measures in cursor:
+            measures = self.dBToApi(measures)
+            mesuresList.append(measures)
         return mesuresList
     
     def apiToDB(self, apiMesuer):

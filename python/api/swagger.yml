@@ -88,46 +88,91 @@ paths:
       operationId: "mesures.read_all"
       tags:
         - Mesures
-      description: "Read all mesures"
+      description: "DEPRECATED Read all measures"
       responses:
         200:
-          description: "Successful read mesures list operation"
+          description: "Successful read measures list operation"
           schema:
             type: "array"
             items:
-              $ref: '#/definitions/mesures'
+              $ref: '#/definitions/measures'
     put:
       operationId: "mesures.add"
       tags:
         - Mesures
-      description: "Add a mesures entry"
+      description: "DEPRECATED Add a measures entry"
       parameters:
         - in: body
-          name: mesures
-          description: "mesures to add"
+          name: measures
+          description: "measures to add"
           schema:
-            $ref: '#/definitions/mesures'
+            $ref: '#/definitions/measures'
       responses:
         200:
-          description: "Successful add mesures operation"
+          description: "Successful add measures operation"
     post:
       operationId: "mesures.search"
       tags:
         - Mesures
-      description: "search mesures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
+      description: "DEPRECATED search measures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
       parameters:
         - in: body
-          name: mesures
-          description: "mesures to search"
+          name: measures
+          description: "measures to search"
           schema:
             type: object
       responses:
         200:
-          description: "Successful found mesures operation"
+          description: "Successful found measures operation"
           schema:
             type: "array"
             items:
-              $ref: '#/definitions/mesures'
+              $ref: '#/definitions/measures'
+  /measures:
+    get:
+      operationId: "measures.read_all"
+      tags:
+        - Measures
+      description: "Read all measures"
+      responses:
+        200:
+          description: "Successful read measures list operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/measures'
+    put:
+      operationId: "measures.add"
+      tags:
+        - Measures
+      description: "Add a measures entry"
+      parameters:
+        - in: body
+          name: measures
+          description: "measures to add"
+          schema:
+            $ref: '#/definitions/measures'
+      responses:
+        200:
+          description: "Successful add measures operation"
+    post:
+      operationId: "measures.search"
+      tags:
+        - Measures
+      description: "Search measures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
+      parameters:
+        - in: body
+          name: measures
+          description: "measures to search"
+          schema:
+            type: object
+      responses:
+        200:
+          description: "Successful found measures operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/measures'
   /action:
     get:
       operationId: "action.read_all"
@@ -195,6 +240,40 @@ definitions:
         upper:
           type: "integer"
     mesures:
+      properties:
+        _id:
+          type: "string"
+        date:
+          type: "string"
+        adm:
+          type: "array"
+          items:
+            type: "string"
+        border_control:
+          type: "boolean"
+        home_office:
+          type: "boolean"
+        closure_leisureandbars:
+          type: "boolean"
+        lockdown:
+          type: "boolean"
+        schools_closed:
+          type: "boolean"
+        traveller_quarantine:
+          type: "boolean"
+        primary_residence:
+          type: "boolean"
+        test_limitations:
+          type: "boolean"
+        misc:
+          type: "string"
+        source:
+          type: "string"
+        actions:
+          type: "array"
+          items:
+            $ref: '#/definitions/action'
+    measures:
       properties:
         _id:
           type: "string"

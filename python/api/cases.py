@@ -32,6 +32,17 @@ class Cases(object):
     def apiToDB(self, cases):
         if ("source" in cases) :
             cases["source"] = source.getSource({"name": cases["source"]})
+        if ("date" in cases) :
+            if not isinstance(cases["date"], datetime.datetime):
+                try:
+                    cases["date"] = datetime.datetime.fromtimestamp(int(cases["date"]))
+                except :
+                    try:
+                        cases["date"] = datetime.datetime.strptime(cases["date"], '%Y-%m-%d')
+                    except :
+                        pass
+                    #was not a timestamp
+                    pass
         return cases
      
     def dBToApi(self, cases):
@@ -41,13 +52,14 @@ class Cases(object):
         cases["source"] = cases["source"]["name"]#
         
         if ("date" in cases) :
-            try:
-                cases["date"] = datetime.datetime.fromtimestamp(int(cases["date"]))
-            except :
+            if not isinstance(cases["date"], datetime.datetime):
                 try:
-                    cases["date"] = datetime.datetime.strptime(cases["date"], '%Y-%m-%d')
+                    cases["date"] = datetime.datetime.fromtimestamp(int(cases["date"]))
                 except :
+                    try:
+                        cases["date"] = datetime.datetime.strptime(cases["date"], '%Y-%m-%d')
+                    except :
+                        pass
+                    #was not a timestamp
                     pass
-                #was not a timestamp
-                pass
         return cases

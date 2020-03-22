@@ -47,6 +47,17 @@ class Mesures(object):
         dbId = apiMesuer.get("_id", None)
         if (not (dbId is None )) :
             mesureDB["_id"] = dbId
+        if ("date" in apiMesuer) :
+            if not isinstance(apiMesuer["date"], datetime.datetime):
+                try:
+                    apiMesuer["date"] = datetime.datetime.fromtimestamp(int(apiMesuer["date"]))
+                except :
+                    try:
+                        apiMesuer["date"] = datetime.datetime.strptime(apiMesuer["date"], '%Y-%m-%d')
+                    except :
+                        pass
+                    #was not a timestamp
+                    pass
         mesureDB["date"] = apiMesuer["date"]
         mesureDB["adm"] = apiMesuer["adm"]
         mesureDB["source"] = source.getSource({"url": apiMesuer["source"]})

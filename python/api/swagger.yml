@@ -264,6 +264,8 @@ definitions:
           type: "integer"
         source:
           type: "string"
+        sourceFull:
+          $ref: '#/definitions/source'
     ageRange:
       properties:
         lower:
@@ -338,6 +340,8 @@ definitions:
           type: "array"
           items:
             $ref: '#/definitions/action'
+        sourceFull:
+          $ref: '#/definitions/source'
     action:
       properties:
         _id:

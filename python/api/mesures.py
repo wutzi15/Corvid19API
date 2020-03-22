@@ -88,9 +88,14 @@ class Mesures(object):
         apiMesuer["_id"] = str(dbMesures["_id"])
         apiMesuer["date"] = dbMesures["date"]
         apiMesuer["adm"] = dbMesures["adm"]
-        apiMesuer["source"] = dbMesures["source"]["url"]
-        apiMesuer["actions"] = dbMesures["actions"]
+        if ("source" in dbMesures) :
+            apiMesuer["source"] = dbMesures["source"]["url"]
+            apiMesuer["sourceFull"] = dbMesures["source"]
+            apiMesuer["sourceFull"]["_id"] = str(apiMesuer["sourceFull"]["_id"])
+        apiMesuer["actions"] = list()
         for action in dbMesures["actions"]:
+            action["_id"] = str(action["_id"])
+            apiMesuer["actions"].append(action)
             if (action["name"] == "border_control") :
                 apiMesuer["border_control"] = True
             if (action["name"] == "home_office") :

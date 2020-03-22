@@ -49,7 +49,10 @@ class Cases(object):
         if (cases is None) :
             return None
         cases["_id"] = str(cases["_id"])
-        cases["source"] = cases["source"]["name"]#
+        if ("source" in cases) :
+            cases["sourceFull"] = cases["source"]
+            cases["source"] = cases["source"]["name"]
+            cases["sourceFull"]["_id"] = str(cases["sourceFull"]["_id"])
         
         if ("date" in cases) :
             if not isinstance(cases["date"], datetime.datetime):

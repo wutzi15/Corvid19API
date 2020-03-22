@@ -26,4 +26,6 @@ class Population(object):
         if (population is None) :
             return None
         population["_id"] = str(population["_id"])
+        if ("source" in population) :
+            population["source"]["_id"] = str(population["source"]["_id"])
         return population

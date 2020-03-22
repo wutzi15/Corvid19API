@@ -1,5 +1,6 @@
 from DBConnection import DBConnection
 import source
+import datetime
 
 def read_all():
     return Cases().loadAll();
@@ -37,5 +38,16 @@ class Cases(object):
         if (cases is None) :
             return None
         cases["_id"] = str(cases["_id"])
-        cases["source"] = cases["source"]["name"]
+        cases["source"] = cases["source"]["name"]#
+        
+        if ("date" in cases) :
+            try:
+                cases["date"] = datetime.datetime.fromtimestamp(int(cases["date"]))
+            except :
+                try:
+                    cases["date"] = datetime.datetime.strptime(cases["date"], '%Y-%m-%d')
+                except :
+                    pass
+                #was not a timestamp
+                pass
         return cases

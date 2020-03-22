@@ -2,6 +2,12 @@ from DBConnection import DBConnection
 import action
 import source
 
+###########
+
+## DEPRECATED
+
+##########
+
 def read_all():
     return Mesures().loadAll()
 def add(mesures):

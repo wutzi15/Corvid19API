@@ -85,49 +85,49 @@ paths:
               $ref: '#/definitions/cases'
   /mesures:
     get:
-      operationId: "mesures.read_all"
+      operationId: "measures.read_all"
       tags:
         - Mesures
-      description: "DEPRICATED Read all mesures"
+      description: "DEPRECATED Read all measures"
       responses:
         200:
-          description: "Successful read mesures list operation"
+          description: "Successful read measures list operation"
           schema:
             type: "array"
             items:
-              $ref: '#/definitions/mesures'
+              $ref: '#/definitions/measures'
     put:
-      operationId: "mesures.add"
+      operationId: "measures.add"
       tags:
         - Mesures
-      description: "DEPRICATED Add a mesures entry"
+      description: "DEPRECATED Add a measures entry"
       parameters:
         - in: body
-          name: mesures
-          description: "mesures to add"
+          name: measures
+          description: "measures to add"
           schema:
-            $ref: '#/definitions/mesures'
+            $ref: '#/definitions/measures'
       responses:
         200:
-          description: "Successful add mesures operation"
+          description: "Successful add measures operation"
     post:
-      operationId: "mesures.search"
+      operationId: "measures.search"
       tags:
         - Mesures
-      description: "DEPRICATED search mesures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
+      description: "DEPRECATED search measures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
       parameters:
         - in: body
-          name: mesures
-          description: "mesures to search"
+          name: measures
+          description: "measures to search"
           schema:
             type: object
       responses:
         200:
-          description: "Successful found mesures operation"
+          description: "Successful found measures operation"
           schema:
             type: "array"
             items:
-              $ref: '#/definitions/mesures'
+              $ref: '#/definitions/measures'
   /measures:
     get:
       operationId: "measures.read_all"
@@ -145,7 +145,7 @@ paths:
       operationId: "measures.add"
       tags:
         - Measures
-      description: "DEPRICATED Add a measures entry"
+      description: "DEPRECATED Add a measures entry"
       parameters:
         - in: body
           name: measures

@@ -15,6 +15,7 @@ import json
 
 
 map_country = pd.read_csv("country_mapping.csv", sep=";")
+map_jhu = pd.read_csv("jhu_mapping.csv", sep=",")
 
 class DBConnection:
   USER_NAME = "root"
@@ -29,13 +30,13 @@ class DBConnection:
     return DBConnection.getConnection()["Statistic"]
 
 
-
-
-
 def doFile(file):
   df = pd.read_csv(file)
   for index, row in map_country.iterrows():
     df.loc[df['Country/Region'] == row['cases'], "Country/Region"] = row['world_bank']
+
+  for index, row in map_jhu.iterrows():
+    df.loc[df['Country/Region'] == row['country'], "Country/Region"] = row['country_iso']
 
   for index, row in df.iterrows():
     data = {}
@@ -54,11 +55,11 @@ def doFile(file):
         date = datetime.datetime.strptime(str(row['Last Update']), FMT)
 
 
-    data['date'] = date.timestamp()
+    data['date'] = str(int(date.timestamp()))
     data['dead'] = row['Deaths']
     data['infected'] = row['Confirmed']
     data['recovered'] = row['Recovered']
-    data['source'] = 'JHUTest'
+    data['source'] = 'JHU'
     adm = []
     adm.append(row['Country/Region'])
     adm.append(row['Province/State'])
@@ -78,7 +79,7 @@ statsdb = conn.getStatisticDB()
 
 CSVPATH= "COVID-19/csse_covid_19_data/csse_covid_19_daily_reports"
 
-statsdb['cases'].delete_many({'source.name': 'JHUTest'})
+statsdb['cases'].delete_many({'source.name': 'JHU'})
 
 for root, dirs, files in os.walk(CSVPATH):
     for file in files:

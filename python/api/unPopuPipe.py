@@ -8,6 +8,7 @@ dataSource = source.getSource({"name": "UN PopulationByAgeSex_OtherVariants"})
 rawDB = connection["raw"]
 statistic = DBConnection.getStatisticDB();
 popDatas = rawDB["unitedNation_PopulationByAgeSex_OtherVariants"].find({})
+popsDB = list()
 for pops in popDatas:
     popDb = dict()
     popDb["LocID"] = pops["LocID"]
@@ -47,13 +48,16 @@ for pops in popDatas:
         popDb["PopTotal"] = "NaN"
     popDb["PopDensity"] = "NaN"
     popDb["source"] = dataSource
-    statistic["Population"].insert(popDb)
-    
+    popsDB.append(popDb);
+    #statistic["Population"].insert(popDb)
+statistic["Population"].drop()
+statistic["Population"].insert_many(popsDB)
 
 dataSource = source.getSource({"name": "UN TotalPopulationBySex"})
 rawDB = connection["raw"]
 statistic = DBConnection.getStatisticDB();
 popDatas = rawDB["unitedNations_TotalPopulationBySex"].find({})
+popsDB = list()
 for pops in popDatas:
     popDb = dict()
     popDb["LocID"] = pops["LocID"]
@@ -90,4 +94,6 @@ for pops in popDatas:
     except:
         popDb["PopDensity"] = "NaN"
     popDb["source"] = dataSource
-    statistic["Population"].insert(popDb)
+    popsDB.append(popDb);
+    #statistic["Population"].insert(popDb)
+statistic["Population"].insert_many(popsDB)

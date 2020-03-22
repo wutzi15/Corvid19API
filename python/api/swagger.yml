@@ -85,7 +85,7 @@ paths:
               $ref: '#/definitions/cases'
   /mesures:
     get:
-      operationId: "measures.read_all"
+      operationId: "mesures.read_all"
       tags:
         - Mesures
       description: "DEPRECATED Read all measures"
@@ -97,7 +97,7 @@ paths:
             items:
               $ref: '#/definitions/measures'
     put:
-      operationId: "measures.add"
+      operationId: "mesures.add"
       tags:
         - Mesures
       description: "DEPRECATED Add a measures entry"
@@ -111,7 +111,7 @@ paths:
         200:
           description: "Successful add measures operation"
     post:
-      operationId: "measures.search"
+      operationId: "mesures.search"
       tags:
         - Mesures
       description: "DEPRECATED search measures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"

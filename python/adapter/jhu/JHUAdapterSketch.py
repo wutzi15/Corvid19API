@@ -77,7 +77,7 @@ def doFile(file):
     #data['recovered'] = int(row['Recovered'])
     data['source'] = 'JHU'
     adm = []
-    adm.append(row['Country/Region'])
+    adm.append(str(row['Country/Region']))
     adm.append(str(row['Province/State']))
     data['adm'] = adm
     agerange = {}
@@ -121,16 +121,10 @@ for _ in tqdm(walkdir()):
 
 # Computing for real
 for filepath in tqdm(walkdir(), total=filescount):
-#   #print(filepath)
   globalI += doFile(filepath)
-# for root, dirs, files in os.walk(CSVPATH):
-#     for file in files:
-#         if os.path.splitext(file)[1] == ".csv":
-#             print(file)
-#             globalI += doFile(CSVPATH +  '/' + file)
 
 print(f"global upload: {globalI}")
-# doFile(CSVPATH +  '/' + '01-31-2020.csv')
+#doFile(CSVPATH +  '/' + '03-17-2020.csv')
 
 
 

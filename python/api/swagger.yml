@@ -200,6 +200,37 @@ paths:
       responses:
         200:
           description: "Successful add action operation"
+  /population:
+    get:
+      operationId: "population.read_all"
+      tags:
+        - Population
+      description: "Read all population"
+      responses:
+        200:
+          description: "Successful read population list operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/population'
+    post:
+      operationId: "population.search"
+      tags:
+        - Population
+      description: "Search population entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
+      parameters:
+        - in: body
+          name: population
+          description: "population to search"
+          schema:
+            type: object
+      responses:
+        200:
+          description: "Successful found population operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/population'
 definitions:
     source:
       properties:
@@ -313,4 +344,34 @@ definitions:
           type: "string"
         name:
           type: "string"
+    population:
+      properties:
+        _id:
+          type: "string"
+        LocID:
+          type: "string"
+        adm:
+          type: "array"
+          items:
+            type: "string"
+        VarID:
+          type: "string"
+        Variant:
+          type: "string"
+        Time:
+          type: "string"
+        MidPeriod:
+          type: "number"
+        ageRange:
+          $ref: '#/definitions/ageRange'
+        PopMale:
+          type: "integer"
+        PopFemale:
+          type: "integer"
+        PopTotal:
+          type: "integer"
+        PopDensity:
+          type: "integer"
+        source:
+          $ref: '#/definitions/source'
 

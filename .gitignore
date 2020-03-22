@@ -1,6 +1,5 @@
 /.pydevproject
-<<<<<<< Updated upstream
 /.idea
-=======
 certs
->>>>>>> Stashed changes
+__pycache__
+/.settings

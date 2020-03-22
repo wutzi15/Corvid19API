@@ -20,6 +20,9 @@ class TimeSeries():
                 self.regions.append(region)
                 
 class Region():
+    '''
+    a region entry in the time series
+    '''
     
     def __init__(self,row):
         self.province=row[0]

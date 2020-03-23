@@ -29,6 +29,13 @@ def home():
     """
     return render_template('home.html')
 
+@app.route('/impressum')
+def impressum():
+    return render_template('impressum.html')
+
+@app.route('/datenschutz')
+def datenschutz():
+    return render_template('datenschutz.html')
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

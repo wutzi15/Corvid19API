@@ -4,6 +4,7 @@
 from DBConnection import DBConnection
 import source
 import datetime
+import misc
 
 # API method to read all cases
 def read_all():
@@ -49,38 +50,17 @@ class Cases(object):
     def apiToDB(self, cases):
         if ("source" in cases) :
             cases["source"] = source.getSource({"name": cases["source"]})
-        if ("date" in cases) :
-            if not isinstance(cases["date"], datetime.datetime):
-                try:
-                    cases["date"] = datetime.datetime.fromtimestamp(int(cases["date"]))
-                except :
-                    try:
-                        cases["date"] = datetime.datetime.strptime(cases["date"], '%Y-%m-%d')
-                    except :
-                        pass
-                    #was not a timestamp
-                    pass
+        misc.toDateTime(cases, "date")
         return cases
      
-     # converts the DB result for the API to be serializable
+    # converts the DB result for the API to be serializable
     def dBToApi(self, cases):
         if (cases is None) :
             return None
-        cases["_id"] = str(cases["_id"])
+        misc.escapeID(cases)
         if ("source" in cases) :
             cases["sourceFull"] = cases["source"]
             cases["source"] = cases["source"]["name"]
             cases["sourceFull"]["_id"] = str(cases["sourceFull"]["_id"])
-        
-        if ("date" in cases) :
-            if not isinstance(cases["date"], datetime.datetime):
-                try:
-                    cases["date"] = datetime.datetime.fromtimestamp(int(cases["date"]))
-                except :
-                    try:
-                        cases["date"] = datetime.datetime.strptime(cases["date"], '%Y-%m-%d')
-                    except :
-                        pass
-                    #was not a timestamp
-                    pass
+        misc.toDateTime(cases, "date")
         return cases

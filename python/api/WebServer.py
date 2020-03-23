@@ -36,6 +36,10 @@ def impressum():
 @app.route('/datenschutz')
 def datenschutz():
     return render_template('datenschutz.html')
+
+@app.route('/apiUI/')
+def apiUI():
+    return render_template('apiUi/index.html')
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

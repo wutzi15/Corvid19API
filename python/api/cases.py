@@ -3,7 +3,6 @@
 #---------------------------
 from DBConnection import DBConnection
 import source
-import datetime
 import misc
 
 # API method to read all cases

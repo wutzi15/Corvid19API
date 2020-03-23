@@ -2,6 +2,7 @@
 #everything about action data
 #---------------------------
 from DBConnection import DBConnection
+import misc
 
 # API method to read all actions
 def read_all():
@@ -34,7 +35,7 @@ class Action(object):
     def readCursor(self, cursor):
         actions = list()
         for action in cursor:
-            action["_id"] = str(action["_id"])
+            misc.escapeID(action)
             actions.append(action)
         return actions
     

@@ -41,5 +41,20 @@ def datenschutz():
 def apiUI():
     return render_template('apiUi/index.html')
 # If we're running in stand alone mode, run the application
+
+
+@app.route('/static/<path:path>')
+def get_resource(path):  # pragma: no cover
+    mimetypes = {
+        ".css": "text/css",
+        ".html": "text/html",
+        ".js": "application/javascript",
+    }
+    complete_path = os.path.join(root_dir(), "static/" + path)
+    ext = os.path.splitext(path)[1]
+    mimetype = mimetypes.get(ext, "text/html")
+    content = get_file(complete_path)
+    return Response(content, mimetype=mimetype)
+
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

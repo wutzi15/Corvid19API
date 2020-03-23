@@ -87,7 +87,7 @@ paths:
     get:
       operationId: "mesures.read_all"
       tags:
-        - Mesures
+        - Mesures DEPRECATED
       description: "DEPRECATED Read all measures"
       responses:
         200:
@@ -99,7 +99,7 @@ paths:
     put:
       operationId: "mesures.add"
       tags:
-        - Mesures
+        - Mesures DEPRECATED
       description: "DEPRECATED Add a measures entry"
       parameters:
         - in: body
@@ -113,7 +113,7 @@ paths:
     post:
       operationId: "mesures.search"
       tags:
-        - Mesures
+        - Mesures DEPRECATED
       description: "DEPRECATED search measures entries. Use MongoDB syntax https://docs.mongodb.com/manual/tutorial/query-documents/"
       parameters:
         - in: body

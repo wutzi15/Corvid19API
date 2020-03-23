@@ -1788,3 +1788,29 @@
 	outline-color: #c00;
 	background-color: #f2dede
 }
+
+.swagger-section .info {
+	text-align: center;
+	color: #fff;
+}
+
+.swagger-section .info p{
+	text-align: center;
+	color: #fff;
+}
+
+.swagger-section div.heading {
+	color: #fff !important;
+}
+
+.swagger-section .heading a{
+	color: #fff !important;
+}
+
+.swagger-section .heading a:hover{
+	color: #ccc !important;
+}
+
+.swagger-section .operations {
+	color: #000 !important;
+}

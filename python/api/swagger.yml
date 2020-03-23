@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: Find all our endpoints and test your request here
   version: "1.0.0"
-  title: Covid19 REST API Article
+  title: Covid19 REST API Documentation
 consumes:
   - "application/json"
 produces:

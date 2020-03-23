@@ -12,8 +12,9 @@ services:
                     - 4711:4711
                 volumes:
                     - ./config/nginx:/etc/nginx/conf.d
-                    - ./static:/static
+                    #- ./static:/static
                     - ./certs:/certs
+                    - ./python/api/templates/img:/static
                 depends_on:
                     - corvid19api
                 restart: always

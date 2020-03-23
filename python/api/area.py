@@ -1,3 +1,7 @@
+#-----------------
+# DEPRECATED
+#-----------------
+
 from DBConnection import DBConnection
 
 def read_all():

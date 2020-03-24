@@ -83,6 +83,21 @@ paths:
             type: "array"
             items:
               $ref: '#/definitions/cases'
+  /cases/many:
+    put:
+      operationId: "cases.addMany"
+      tags:
+        - manyCases
+      description: "Add many cases at once. Arguments are a JSON Object containing a 'cases' array"
+      parameters:
+        - in: body
+          name: cases
+          description: "cases to add"
+          schema:
+            $ref: "#/definitions/manyCases"
+      responses:
+        200:
+          description: "Successfuly added cases"
   /mesures:
     get:
       operationId: "mesures.read_all"
@@ -288,6 +303,12 @@ definitions:
           type: "integer"
         source:
           type: "string"
+    manyCases:
+      properties:
+        cases:
+          type: "array"
+          items:
+            $ref: "#/definitions/casesIn"
     ageRange:
       properties:
         lower:

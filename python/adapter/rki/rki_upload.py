@@ -29,7 +29,7 @@ class DBConnection:
 conn = DBConnection()
 statsdb = conn.getStatisticDB()
 
-statsdb['cases'].delete_many({'source.name': 'JHU'})
+statsdb['cases'].delete_many({'source.name': 'RKI'})
 
 i = 0
 r = requests.get("https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_COVID19/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json")

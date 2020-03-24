@@ -32,7 +32,7 @@ class DBConnection:
   def getStatisticDB():
     return DBConnection.getConnection()["Statistic"]
 
-casesData = []
+
 def doFile(file):
   df = pd.read_csv(file)
   #print(df.head())
@@ -92,7 +92,11 @@ def doFile(file):
       data['sex'] = 'NaN'
       data['tested'] = 0
       #print(json.dumps(data))
-      casesData.append(data)
+      r = requests.put('http://bene.gridpiloten.de:4711/api/cases', json=data)
+      if r.status_code != 204:
+        print(file)
+        print(json.dumps(data))
+        print(r.content)
       i += 1
   except:
     df.fillna(0)
@@ -113,10 +117,14 @@ def doFile(file):
       data['dead'] = row['Deaths']
       data['recovered'] = row['Recovered']
       data['sex'] = "NaN"
-      casesData.append(data)
+
       i += 1
-      #print(data)
-    #print(file)
+      r = requests.put('http://bene.gridpiloten.de:4711/api/cases', json=data)
+      if r.status_code != 204:
+        print(file)
+        print(json.dumps(data))
+        print(r.content)
+    print(file)
 
 
   #print(f"Uploaded: {i}")
@@ -127,7 +135,7 @@ statsdb = conn.getStatisticDB()
 
 CSVPATH= "COVID-19/csse_covid_19_data/csse_covid_19_daily_reports"
 
-
+statsdb['cases'].delete_many({'source.name': 'JHU'})
 
 globalI = 0
 
@@ -147,17 +155,9 @@ for _ in tqdm(walkdir()):
 for filepath in tqdm(walkdir(), total=filescount):
   globalI += doFile(filepath)
 
-
-statsdb['cases'].delete_many({'source.name': 'JHU'})
-
 #doFile(CSVPATH +  '/' + '03-23-2020.csv')
-uploadData = {}
-uploadData["cases"] = casesData
-r = requests.put('http://bene.gridpiloten.de:4711/api/cases', json=uploadData)
-if r.status_code != 204:
-  print(file)
-  print(json.dumps(data))
-  print(r.content)
+
+
 
 print(f"global upload: {globalI}")
 #

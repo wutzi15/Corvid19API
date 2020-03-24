@@ -8,6 +8,9 @@ import pymongo
 import csv
 from dateutil.parser import parse
 from tqdm import tqdm
+import sys
+sys.path.insert(1, '../../api')
+from cases import addMany
 
 # https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0/geoservice?orderBy=AnzahlFall&orderByAsc=false
 # https://opendata.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0.csv
@@ -39,6 +42,7 @@ total = 0
 for _ in reader:
     total += 1
 reader2 = csv.DictReader(open("RKI_COVID19.csv", "r"))
+casesData = []
 for data in tqdm(reader2, total=total):
     #pprint(data)
     outData = {}
@@ -84,8 +88,16 @@ for data in tqdm(reader2, total=total):
     if r.status_code != 204:
       print(json.dumps(outData))
       print(r.content)
+    #casesData.append(outData)
     i += 1
     #print(outData)
+# uploadData = {}
+# uploadData["cases"] = casesData
+# r = requests.put('http://bene.gridpiloten.de:4711/api/cases/many', json=uploadData)
+# if r.status_code != 204:
+#     print(json.dumps(uploadData))
+#     print(r.content)
+# addMany(uploadData)
 print(f"Uploaded: {i}")
 
 

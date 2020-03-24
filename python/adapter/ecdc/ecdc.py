@@ -33,6 +33,7 @@ for _ in reader:
     total += 1
 reader2 = csv.DictReader(open("ecdc.csv", "r"))
 i = 0
+casesData = []
 for data in tqdm(reader2, total=total):
     #pprint(data)
     outData = {}
@@ -63,8 +64,15 @@ for data in tqdm(reader2, total=total):
     if r.status_code != 204:
         print(json.dumps(outData))
         print(r.content)
+    # casesData.append(outData)
     i += 1
     #print(outData)
+# uploadData = {}
+# uploadData["cases"] = casesData
+# r = requests.put('http://bene.gridpiloten.de:4711/api/cases/many', json=uploadData)
+# if r.status_code != 204:
+#   print(json.dumps(uploadData))
+#   print(r.content)
 print(f"Uploaded: {i}")
 
 

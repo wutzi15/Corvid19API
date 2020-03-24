@@ -9,6 +9,8 @@ import csv
 from dateutil.parser import parse
 from tqdm import tqdm
 
+# https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0/geoservice?orderBy=AnzahlFall&orderByAsc=false
+# https://opendata.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0.csv
 class DBConnection:
   USER_NAME = "root"
   PASSWORD = "challenge1757"
